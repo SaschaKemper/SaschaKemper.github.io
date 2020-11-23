@@ -22,7 +22,8 @@
             },
             scene: {
                 preload: preload,
-                create: create
+                create: create,
+                update: update
             }
         };
 
@@ -30,6 +31,22 @@
 
         function preload() {
             this.load.image('ball', 'https://saschakemper.github.io/phaser/assets/ball.png');
+
+            // var bmd = this.game.add.bitmapData(250, 500);
+            // bmd.ctx.fillStyle = '#9a783d';
+            // bmd.ctx.strokeStyle = '#35371c';
+            // bmd.ctx.lineWidth = 12;
+            // bmd.ctx.fillRect(0, 0, 250, 500);
+            // bmd.ctx.strokeRect(0, 0, 250, 500);
+            // this.game.cache.addBitmapData('upgradePanel', bmd);
+
+            // var buttonImage = this.game.add.bitmapData(476, 48);
+            // buttonImage.ctx.fillStyle = '#e6dec7';
+            // buttonImage.ctx.strokeStyle = '#35371c';
+            // buttonImage.ctx.lineWidth = 4;
+            // buttonImage.ctx.fillRect(0, 0, 225, 48);
+            // buttonImage.ctx.strokeRect(0, 0, 225, 48);
+            // this.game.cache.addBitmapData('button', buttonImage);
         }
 
         function create() {
@@ -38,10 +55,43 @@
             //  Add in a stack of balls
 
             for (var i = 0; i < 64; i++) {
-                var ball = this.matter.add.image(Phaser.Math.Between(100, 700), Phaser.Math.Between(-600, 0), 'ball');
+
+            }
+
+            this.input.on('pointerdown', function (pointer) {
+
+                var bodies = this.matter.intersectPoint(pointer.worldX, pointer.worldY);
+
+                console.log(bodies);
+
+                if (bodies.length) {
+                    bodies[0].destroy();
+                    //this.matter.composite.remove(this.matter.world, bodies[0]);
+                }
+
+            }, this);
+
+            //UI
+            // this.upgradePanel = this.game.add.image(10, 70, this.game.cache.getBitmapData('upgradePanel'));
+            // var upgradeButtons = this.upgradePanel.addChild(this.game.add.group());
+            // upgradeButtons.position.setTo(8, 8);
+        }
+
+        var delay = 0;
+        var max = 70;
+        var num = 0;
+
+        function update(time, dt) {
+            delay = delay - 1 * dt
+
+            if (self.delay <= 0 && self.num < self.max) {
+                self.delay = 1
+                self.num = self.num + 1
+                var ball = this.matter.add.image(600, -100, 'ball');
                 ball.setCircle();
                 ball.setFriction(0.005);
                 ball.setBounce(0.5);
+                ball.setVelocity(-10, 5);
             }
         }
 
