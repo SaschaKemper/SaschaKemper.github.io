@@ -52,22 +52,15 @@
         function create() {
             this.matter.world.setBounds(0, 0, 800, 600, 32, true, true, false, true);
 
-            //  Add in a stack of balls
-
-            for (var i = 0; i < 64; i++) {
-
-            }
-
             this.input.on('pointerdown', function (pointer) {
 
                 var bodies = this.matter.intersectPoint(pointer.worldX, pointer.worldY);
 
-                console.log(bodies);
-
-                if (bodies.length) {
-                    bodies[0].destroy();
-                    //this.matter.composite.remove(this.matter.world, bodies[0]);
-                }
+                for (const entry of bodies) {
+                console.log(entry);
+                //<Phaser.Physics.Matter.Image>entry.destroy();
+                this.matter.world.remove(entry);                
+            }
 
             }, this);
 
