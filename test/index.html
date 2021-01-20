@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Built-In Empty Test</title>
+    <title>Our Village Prototype</title>
     <link rel="shortcut icon" href="TemplateData/favicon.ico">
     <link rel="stylesheet" href="TemplateData/style.css">
   </head>
@@ -25,15 +25,15 @@
     <script>
       const hideFullScreenButton = "";
       const buildUrl = "Build";
-      const loaderUrl = buildUrl + "/Builds.loader.js";
+      const loaderUrl = buildUrl + "/WebGL.loader.js";
       const config = {
-        dataUrl: buildUrl + "/Builds.data.unityweb",
-        frameworkUrl: buildUrl + "/Builds.framework.js.unityweb",
-        codeUrl: buildUrl + "/Builds.wasm.unityweb",
+        dataUrl: buildUrl + "/WebGL.data.unityweb",
+        frameworkUrl: buildUrl + "/WebGL.framework.js.unityweb",
+        codeUrl: buildUrl + "/WebGL.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "Built-In Empty Test",
-        productVersion: "1.0",
+        companyName: "CipSoft GmbH",
+        productName: "Our Village Prototype",
+        productVersion: "0.1",
       };
 
       const container = document.querySelector("#unity-container");
@@ -73,6 +73,7 @@
           progressBarEmpty.style.display = "";
           progressBarFull.style.width = `${100 * progress}%`;
         }).then((unityInstance) => {
+          window.unityInstance = unityInstance;
           loadingCover.style.display = "none";
           if (canFullscreen) {
             if (!hideFullScreenButton) {
@@ -87,6 +88,21 @@
         });
       };
       document.body.appendChild(script);
+      
+        function MyOnBlur() {
+ 
+            window.unityInstance.SendMessage("GameLogic", "BrowserBlur", "...");
+ 
+        }
+   
+        function MyOnFocus() {
+           
+            window.unityInstance.SendMessage("GameLogic", "BrowserFocus", "...");
+           
+        }
+   
+        window.onblur = MyOnBlur;
+        window.onfocus = MyOnFocus;
     </script>
   </body>
 </html>
