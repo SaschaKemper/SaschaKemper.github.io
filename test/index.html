@@ -90,15 +90,11 @@
       document.body.appendChild(script);
       
         function MyOnBlur() {
- 
-            window.unityInstance.SendMessage("GameLogic", "BrowserBlur", "...");
- 
-        }
+             window.unityInstance.SendMessage("GameLogic", "BrowserBlur", "...");
+         }
    
-        function MyOnFocus() {
-           
-            window.unityInstance.SendMessage("GameLogic", "BrowserFocus", "...");
-           
+        function MyOnFocus() {         
+            window.unityInstance.SendMessage("GameLogic", "BrowserFocus", "...");          
         }
    
         window.onblur = MyOnBlur;
